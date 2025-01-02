@@ -4,17 +4,31 @@ import { Product } from "@/types";
 
 export default async function ProductsPageWrapper() {
   const products = await prisma.product.findMany({
-    include: {
-      tenant: true,
+    select: {
+      id: true,
+      name: true,
+      description: true,
+      basePrice: true,
+      imageUrl: true,
+      tenantId: true,
+      createdAt: true,
+      updatedAt: true,
+      tenant: {
+        select: {
+          id: true,
+          name: true,
+          createdAt: true,
+          updatedAt: true,
+        }
+      },
       inventory: true,
-    },
+    }
   });
 
-  // Convert any null values to match our Product type
-  const serializedProducts = products.map((product: { description: any; imageUrl: any; }) => ({
+  // Convert Decimal to number for serialization
+  const serializedProducts = products.map((product: { basePrice: any; }) => ({
     ...product,
-    description: product.description || null,  // Convert undefined to null
-    imageUrl: product.imageUrl || null,
+    basePrice: Number(product.basePrice),
   }));
 
   return <ProductsPage products={serializedProducts as Product[]} />;
