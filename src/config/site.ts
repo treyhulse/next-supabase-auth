@@ -12,13 +12,13 @@ type SiteConfig = {
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL!;
 
 export const siteConfig: SiteConfig = {
-  name: "Next Level UI",
+  name: "Takeout Threads",
   description:
-    "Blazing-fast, interactive app built with latest web tech (Next.js 14). Modern design (Shadcn, Tailwind CSS). Open-source & yours to explore!",
+    "Takeout Threads is a platform for screen printers and apparel providers to allow for full customization of their products, automated order processing, and order management.",
   url: baseUrl,
   ogImage: `${baseUrl}/open-graph.png`,
   links: {
-    twitter: "https://twitter.com/AdhithyaSarath",
-    github: "https://github.com/SarathAdhi",
+    twitter: "https://twitter.com/treyhulse",
+    github: "https://github.com/treyhulse",
   },
 };

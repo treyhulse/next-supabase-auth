@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Product {
+  id          String      @id @default(cuid())
+  name        String
+  description String?
+  basePrice   Float
+  imageUrl    String?
+  tenantId    String
+  tenant      Tenant      @relation(fields: [tenantId], references: [id])
+  inventory   Inventory?
+  orderItems  OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  tenantId     String
+  userId       String?
+  customerName String
+  status       OrderStatus @default(pending)
+  totalPrice   Decimal
+  tenant       Tenant      @relation(fields: [tenantId], references: [id])
+  user         User?       @relation(fields: [userId], references: [id])
+  orderItems   OrderItem[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Decimal
+  order     Order    @relation(fields: [orderId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Inventory {
+  id        String   @id @default(uuid())
+  productId String   @unique
+  quantity  Int
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tenant {
+  id        String    @id @default(uuid())
+  name      String
+  products  Product[]
+  orders    Order[]
+  users     User[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model User {
+  id        String   @id
+  tenantId  String
+  name      String?
+  email     String   @unique
+  tenant    Tenant   @relation(fields: [tenantId], references: [id])
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  pending
+  processing
+  completed
+  cancelled
+}
