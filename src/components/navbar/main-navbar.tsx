@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { ModeToggle } from "./mode-toggle";
+import { ThemeToggle } from "@/components/theme-toggle";
+import Image from "next/image";
 
 import { signOut } from "@/app/actions";
 import {
@@ -24,9 +25,14 @@ const Navbar = async () => {
   return (
     <header className="w-full">
       <div className="container p-4 sm:px-6 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <Lock />
-          <h5 className="mt-0.5">Takeout Threads</h5>
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logos/BlackLogo-Text.png"
+            alt="Takeout Threads Logo"
+            width={150}
+            height={40}
+            className="dark:invert"
+          />
         </Link>
 
         <div className="flex items-center gap-3">
@@ -77,7 +83,7 @@ const Navbar = async () => {
           <Button asChild>
             <Link href="/design-lab">Design Lab</Link>
           </Button>
-          <ModeToggle />
+          <ThemeToggle />
         </div>
       </div>
     </header>

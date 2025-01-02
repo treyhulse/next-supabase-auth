@@ -3,6 +3,7 @@ import { ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { UserButton } from "@/components/auth/user-button"
+import Image from "next/image"
 
 export function DesignNavigation() {
   return (
@@ -18,8 +19,14 @@ export function DesignNavigation() {
 
         {/* Center */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <Link href="/design-lab" className="flex items-center gap-2">
-            <span className="text-lg font-semibold">Design Lab</span>
+          <Link href="/design-lab">
+            <Image
+              src="/logos/BlackLogo-Text.png"
+              alt="Takeout Threads Logo"
+              width={150}
+              height={40}
+              className="dark:invert"
+            />
           </Link>
         </div>
 

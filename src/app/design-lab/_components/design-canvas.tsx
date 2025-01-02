@@ -167,7 +167,7 @@ export function DesignCanvas({ design, onChange, product }: DesignCanvasProps) {
   }, [design, product])
 
   return (
-    <Card className="w-full h-full flex items-center justify-center bg-gray-50 dark:bg-gray-900 overflow-hidden">
+    <Card className="w-full h-full flex items-center justify-center overflow-hidden">
       <canvas ref={canvasRef} />
     </Card>
   )
