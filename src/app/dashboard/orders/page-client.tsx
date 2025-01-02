@@ -8,23 +8,13 @@ import { Modal } from "@/components/ui/modal";
 import { OrderForm } from "./_components/order-form";
 import { toast } from "react-hot-toast";
 import { format } from "date-fns";
+import { Order } from "@/types";
 
-interface Order {
-  id: string;
-  customerName: string;
-  status: "pending" | "processing" | "completed" | "cancelled";
-  totalPrice: number;
-  tenant: { name: string };
-  user?: { email: string };
-  orderItems: Array<{
-    product: { name: string };
-    quantity: number;
-    price: number;
-  }>;
-  createdAt: Date;
+interface OrdersPageProps {
+  orders: Order[];
 }
 
-export default function OrdersPage({ orders }: { orders: Order[] }) {
+export default function OrdersPage({ orders }: OrdersPageProps) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
