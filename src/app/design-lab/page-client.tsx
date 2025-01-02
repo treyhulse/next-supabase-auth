@@ -4,15 +4,55 @@ import { useState } from "react"
 import { Product } from "@/types"
 import { ProductDrawer } from "./_components/product-drawer"
 import { MediaSelector } from "./_components/media-selector"
+import { DesignSelector } from "./_components/design-selector"
+import { DesignLayers } from "./_components/design-layers"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 const queryClient = new QueryClient()
 
+export interface DesignLayer {
+  id: string
+  type: string
+  src: string
+  x: number
+  y: number
+  width: number
+  height: number
+  rotation: number
+  zIndex: number
+  visible: boolean
+  dpi: number
+}
+
+export interface Design {
+  id?: string
+  name: string
+  productId: string
+  userId: string
+  layers: DesignLayer[]
+  createdAt?: Date
+  updatedAt?: Date
+}
+
 export default function DesignLabClient() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [currentDesign, setCurrentDesign] = useState<Design | null>(null)
+  const [layers, setLayers] = useState<DesignLayer[]>([])
 
   const handleProductSelect = (product: Product) => {
     setSelectedProduct(product)
+  }
+
+  const handleDesignSelect = async (designId: string) => {
+    // Implement design loading logic
+  }
+
+  const handleDesignSave = async (design: Design) => {
+    // Implement design saving logic
+  }
+
+  const handleLayersChange = (newLayers: DesignLayer[]) => {
+    setLayers(newLayers)
   }
 
   return (
@@ -26,8 +66,31 @@ export default function DesignLabClient() {
           />
           <MediaSelector 
             onSelectMedia={(media) => {
-              // ... existing media selector code
+              // Add media as a new layer
+              const newLayer: DesignLayer = {
+                id: crypto.randomUUID(),
+                type: "image",
+                src: media.url,
+                x: 0,
+                y: 0,
+                width: 200,
+                height: 200,
+                rotation: 0,
+                zIndex: layers.length,
+                visible: true,
+                dpi: 300
+              }
+              setLayers([...layers, newLayer])
             }}
+          />
+          <DesignSelector
+            currentDesign={currentDesign}
+            onSelect={handleDesignSelect}
+            onSave={handleDesignSave}
+          />
+          <DesignLayers
+            layers={layers}
+            onChange={handleLayersChange}
           />
         </div>
 
