@@ -64,4 +64,28 @@ export interface Product {
   } | null;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface Inventory {
+  id: string;
+  quantity: number;
+  productId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  product: {
+    id: string;
+    name: string;
+    description: string | null;
+    basePrice: number;
+    imageUrl: string | null;
+    tenantId: string;
+    createdAt: Date;
+    updatedAt: Date;
+    tenant: {
+      id: string;
+      name: string;
+      createdAt: Date;
+      updatedAt: Date;
+    };
+  };
 } 

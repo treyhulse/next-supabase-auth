@@ -6,19 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { toast } from "react-hot-toast";
 import { Input } from "@/components/ui/input";
+import { Inventory } from "@/types";
 
-interface Inventory {
-  id: string;
-  quantity: number;
-  product: {
-    name: string;
-    tenant: {
-      name: string;
-    };
-  };
+interface InventoryPageProps {
+  inventory: Inventory[];
 }
 
-export default function InventoryPage({ inventory }: { inventory: Inventory[] }) {
+export default function InventoryPage({ inventory }: InventoryPageProps) {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<Inventory | null>(null);
   const [quantity, setQuantity] = useState<number>(0);
