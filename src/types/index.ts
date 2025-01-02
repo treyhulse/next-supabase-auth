@@ -88,4 +88,14 @@ export interface Inventory {
       updatedAt: Date;
     };
   };
+}
+
+export interface MediaFile {
+  id: string
+  userId: string
+  name: string
+  url: string
+  type: string
+  createdAt: Date
+  updatedAt: Date
 } 

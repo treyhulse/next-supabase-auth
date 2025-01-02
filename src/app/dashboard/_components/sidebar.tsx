@@ -5,10 +5,16 @@ import {
   ClipboardList, 
   Building2, 
   Package,
-  Image
+  Image,
+  LayoutDashboard
 } from "lucide-react";
 
 const routes = [
+  {
+    label: "Overview",
+    icon: LayoutDashboard,
+    href: "/dashboard",
+  },
   {
     label: "Products",
     icon: ShoppingBag,

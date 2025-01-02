@@ -27,11 +27,8 @@ const HomePage = () => {
           <Button className="rounded-full">
             <Link href="/login">Get Started</Link>
           </Button>
-
-          <Button variant="outline" className="rounded-full">
-            <a href="https://github.com/SarathAdhi/next-supabase-auth">
-              GitHub
-            </a>
+          <Button className="rounded-full">
+            <Link href="/design-lab">Design Lab</Link>
           </Button>
         </div>
       </section>

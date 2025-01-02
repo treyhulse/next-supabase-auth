@@ -9,17 +9,20 @@ datasource db {
 }
 
 model Product {
-  id          String      @id @default(cuid())
+  id          String    @id @default(cuid())
   name        String
   description String?
-  basePrice   Decimal     @db.Decimal(10, 2)
+  basePrice   Decimal   @db.Decimal(10, 2)
   imageUrl    String?
+  width       Int?      // Physical dimensions for design placement
+  height      Int?
   tenantId    String
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  tenant      Tenant      @relation(fields: [tenantId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  tenant      Tenant    @relation(fields: [tenantId], references: [id])
   inventory   Inventory?
   orderItems  OrderItem[]
+  designs     Design[]  // Relation to designs
 
   @@index([tenantId])
 }
@@ -70,14 +73,16 @@ model Tenant {
 }
 
 model User {
-  id        String   @id
-  tenantId  String
-  name      String?
-  email     String   @unique
-  tenant    Tenant   @relation(fields: [tenantId], references: [id])
-  orders    Order[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String      @id
+  tenantId   String
+  name       String?
+  email      String      @unique
+  tenant     Tenant      @relation(fields: [tenantId], references: [id])
+  orders     Order[]
+  designs    Design[]    // Add designs relation
+  mediaFiles MediaFile[] // Add mediaFiles relation
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 }
 
 enum OrderStatus {
@@ -85,4 +90,53 @@ enum OrderStatus {
   processing
   completed
   cancelled
+}
+
+// New models for design lab
+model Design {
+  id          String        @id @default(uuid())
+  name        String
+  productId   String
+  userId      String
+  product     Product       @relation(fields: [productId], references: [id])
+  user        User          @relation(fields: [userId], references: [id])
+  layers      DesignLayer[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([productId])
+  @@index([userId])
+}
+
+model DesignLayer {
+  id        String   @id @default(uuid())
+  designId  String
+  type      String   // "image", etc.
+  src       String
+  x         Float
+  y         Float
+  width     Float
+  height    Float
+  rotation  Float
+  zIndex    Int
+  visible   Boolean  @default(true)
+  dpi       Int      @default(300)
+  design    Design   @relation(fields: [designId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([designId])
+}
+
+model MediaFile {
+  id        String   @id @default(uuid())
+  userId    String
+  name      String
+  url       String
+  type      String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
