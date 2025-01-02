@@ -7,8 +7,16 @@ import { MediaSelector } from "./_components/media-selector"
 import { DesignSelector } from "./_components/design-selector"
 import { DesignLayers } from "./_components/design-layers"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { Decimal } from "@prisma/client/runtime/library"
 
 const queryClient = new QueryClient()
+
+// Import the ProductFromPrisma type from product-drawer or create it here
+type ProductFromPrisma = Omit<Product, 'tenant' | 'inventory' | 'basePrice'> & {
+  tenant?: Product['tenant']
+  inventory?: Product['inventory']
+  basePrice: Decimal
+}
 
 export interface DesignLayer {
   id: string
@@ -35,11 +43,11 @@ export interface Design {
 }
 
 export default function DesignLabClient() {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
+  const [selectedProduct, setSelectedProduct] = useState<ProductFromPrisma | null>(null)
   const [currentDesign, setCurrentDesign] = useState<Design | null>(null)
   const [layers, setLayers] = useState<DesignLayer[]>([])
 
-  const handleProductSelect = (product: Product) => {
+  const handleProductSelect = (product: ProductFromPrisma) => {
     setSelectedProduct(product)
   }
 
