@@ -8,11 +8,20 @@ import { Modal } from "@/components/ui/modal";
 import { ProductForm } from "./_components/product-form";
 import { createProduct, updateProduct, deleteProduct } from "./actions";
 import { toast } from "react-hot-toast";
-import { Product } from "@/types";
+import { Product, ProductCategory } from "@/types";
 
 interface ProductsPageProps {
   products: Product[];
 }
+
+const CATEGORIES: { id: ProductCategory; label: string }[] = [
+  { id: 'TSHIRT', label: 'T-Shirts' },
+  { id: 'HOODIE', label: 'Hoodies' },
+  { id: 'LONG_SLEEVE', label: 'Long Sleeves' },
+  { id: 'TANK_TOP', label: 'Tank Tops' },
+  { id: 'SWEATSHIRT', label: 'Sweatshirts' },
+  { id: 'OTHER', label: 'Other' },
+];
 
 export default function ProductsPage({ products }: ProductsPageProps) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -23,6 +32,14 @@ export default function ProductsPage({ products }: ProductsPageProps) {
   const columns = [
     { key: "name", label: "Name" },
     { key: "description", label: "Description" },
+    { 
+      key: "category", 
+      label: "Category",
+      render: (product: Product) => {
+        const category = CATEGORIES.find((c) => c.id === product.category);
+        return category?.label || product.category;
+      }
+    },
     { 
       key: "basePrice", 
       label: "Price",

@@ -2,13 +2,20 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { ProductCategory } from "@/types";
 
-export async function createProduct(data: {
+interface ProductData {
   name: string;
   description?: string;
+  category: ProductCategory;
   basePrice: number;
+  imageUrl?: string;
+  width?: number | null;
+  height?: number | null;
   tenantId: string;
-}) {
+}
+
+export async function createProduct(data: ProductData) {
   try {
     const product = await prisma.product.create({
       data: {
@@ -24,15 +31,7 @@ export async function createProduct(data: {
   }
 }
 
-export async function updateProduct(
-  id: string,
-  data: {
-    name: string;
-    description?: string;
-    basePrice: number;
-    tenantId: string;
-  }
-) {
+export async function updateProduct(id: string, data: ProductData) {
   try {
     const product = await prisma.product.update({
       where: { id },

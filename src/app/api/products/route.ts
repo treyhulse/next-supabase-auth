@@ -1,12 +1,9 @@
-import { NextResponse } from 'next/server'
-import { prisma } from '@/lib/prisma'
+import { prisma } from "@/lib/prisma"
+import { NextResponse } from "next/server"
 
 export async function GET() {
   try {
     const products = await prisma.product.findMany({
-      where: {
-        // Add any filtering conditions here
-      },
       orderBy: {
         createdAt: 'desc'
       }
@@ -14,10 +11,6 @@ export async function GET() {
 
     return NextResponse.json(products)
   } catch (error) {
-    console.error('Failed to fetch products:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch products' },
-      { status: 500 }
-    )
+    return new NextResponse("Internal error", { status: 500 })
   }
 } 

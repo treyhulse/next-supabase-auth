@@ -42,12 +42,17 @@ export interface OrderItem {
   updatedAt: Date;
 }
 
+export type ProductCategory = 'TSHIRT' | 'HOODIE' | 'LONG_SLEEVE' | 'TANK_TOP' | 'SWEATSHIRT' | 'OTHER';
+
 export interface Product {
   id: string;
   name: string;
   description: string | null;
   basePrice: number;
   imageUrl: string | null;
+  category: ProductCategory;
+  width?: number | null;
+  height?: number | null;
   tenantId: string;
   tenant: {
     id: string;

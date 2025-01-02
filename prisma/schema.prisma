@@ -8,10 +8,20 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum ProductCategory {
+  TSHIRT
+  HOODIE
+  LONG_SLEEVE
+  TANK_TOP
+  SWEATSHIRT
+  OTHER
+}
+
 model Product {
   id          String    @id @default(cuid())
   name        String
   description String?
+  category    ProductCategory @default(OTHER)
   basePrice   Decimal   @db.Decimal(10, 2)
   imageUrl    String?
   width       Int?      // Physical dimensions for design placement
