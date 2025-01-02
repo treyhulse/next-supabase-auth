@@ -25,7 +25,7 @@ import { Decimal } from "@prisma/client/runtime/library"
 type ProductFromPrisma = Omit<Product, 'tenant' | 'inventory' | 'basePrice'> & {
   tenant?: Product['tenant']
   inventory?: Product['inventory']
-  basePrice: Decimal
+  basePrice: number
 }
 
 interface ProductDrawerProps {

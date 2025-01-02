@@ -11,7 +11,13 @@ export async function getProducts() {
       }
     })
 
-    return { success: true, data: products }
+    // Serialize the products by converting Decimal to number
+    const serializedProducts = products.map(product => ({
+      ...product,
+      basePrice: Number(product.basePrice)
+    }))
+
+    return { success: true, data: serializedProducts }
   } catch (error) {
     console.error('Error fetching products:', error)
     return { success: false, error: 'Failed to fetch products' }

@@ -9,6 +9,7 @@ import { Home, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Sidebar } from "./sidebar";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -36,13 +37,16 @@ export function Navbar() {
         {/* Logo/Home Link */}
         <Link href="/">
           <div className="flex items-center gap-x-2">
-            <Home className="h-5 w-5" />
-            <span className={cn(
-              "font-semibold text-lg hidden md:block",
-              pathname === "/" && "text-blue-500"
-            )}>
-              KC Store Fixtures
-            </span>
+            <Image 
+              src="/logos/BlackLogo-Text.png"
+              alt="Takeout Threads"
+              width={150}
+              height={30}
+              className={cn(
+                "hidden md:block",
+                pathname === "/" && "opacity-80"
+              )}
+            />
           </div>
         </Link>
       </div>

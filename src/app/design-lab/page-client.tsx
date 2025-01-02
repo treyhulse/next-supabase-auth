@@ -15,7 +15,7 @@ const queryClient = new QueryClient()
 type ProductFromPrisma = Omit<Product, 'tenant' | 'inventory' | 'basePrice'> & {
   tenant?: Product['tenant']
   inventory?: Product['inventory']
-  basePrice: Decimal
+  basePrice: number
 }
 
 export interface DesignLayer {

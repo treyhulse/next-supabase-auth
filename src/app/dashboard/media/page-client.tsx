@@ -9,6 +9,7 @@ import { createClient } from '@supabase/supabase-js';
 import Image from 'next/image';
 import { Loader2, Trash, Upload } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { MediaSelector } from '@/app/design-lab/_components/media-selector';
 
 // Create a public client
 const supabase = createClient(
@@ -161,6 +162,7 @@ export default function MediaPage({ initialFiles }: MediaPageProps) {
             </div>
           </div>
         ))}
+
       </div>
 
       <Dialog open={isPreviewOpen} onOpenChange={setIsPreviewOpen}>
@@ -194,6 +196,16 @@ export default function MediaPage({ initialFiles }: MediaPageProps) {
           </div>
         </DialogContent>
       </Dialog>
+
+      <div className="mt-8">
+        <h2 className="text-xl font-semibold mb-4">Media Selector</h2>
+        <MediaSelector 
+          onSelectMedia={(media) => {
+            // You can handle the selected media here if needed
+            console.log('Selected media:', media);
+          }} 
+        />
+      </div>
     </div>
   );
 } 
