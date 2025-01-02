@@ -83,6 +83,9 @@ const Navbar = async () => {
           <Button asChild>
             <Link href="/design-lab">Design Lab</Link>
           </Button>
+          <Button asChild variant="outline">
+            <Link href="/products">Products</Link>
+          </Button>
           <ThemeToggle />
         </div>
       </div>
