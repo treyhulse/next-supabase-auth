@@ -8,23 +8,13 @@ import { Modal } from "@/components/ui/modal";
 import { ProductForm } from "./_components/product-form";
 import { createProduct, updateProduct, deleteProduct } from "./actions";
 import { toast } from "react-hot-toast";
+import { Product } from "@/types";
 
-// Define TypeScript interfaces
-interface Product {
-  id: string;
-  name: string;
-  description?: string;
-  basePrice: number;
-  tenantId: string;
-  tenant: {
-    name: string;
-  };
-  inventory?: {
-    quantity: number;
-  };
+interface ProductsPageProps {
+  products: Product[];
 }
 
-export default function ProductsPage({ products }: { products: Product[] }) {
+export default function ProductsPage({ products }: ProductsPageProps) {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);

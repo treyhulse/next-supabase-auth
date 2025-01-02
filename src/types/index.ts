@@ -40,4 +40,28 @@ export interface OrderItem {
   };
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  description: string | null;
+  basePrice: number;
+  imageUrl: string | null;
+  tenantId: string;
+  tenant: {
+    id: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  inventory: {
+    id: string;
+    quantity: number;
+    productId: string;
+    createdAt: Date;
+    updatedAt: Date;
+  } | null;
+  createdAt: Date;
+  updatedAt: Date;
 } 
